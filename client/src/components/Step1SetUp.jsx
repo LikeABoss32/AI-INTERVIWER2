@@ -185,7 +185,12 @@ function Step1SetUp({ onStart }) {
                                     accept="application/pdf"
                                     id="resumeUpload"
                                     className='hidden'
-                                    onChange={(e) => setResumeFile(e.target.files[0])} />
+                                    onChange={(e) => {
+                                        const file = e?.target?.files?.[0];
+                                        if (file) {
+                                          setResumeFile(file);
+                                        }
+                                      }} />
 
                                 <p className='text-gray-600 font-medium'>
                                     {resumeFile ? resumeFile.name : "Click to upload resume (Optional)"}
