@@ -12,7 +12,12 @@ import { ServerUrl } from '../App'
 import { BsArrowRight } from 'react-icons/bs'
 
 function Step2Interview({ interviewData, onFinish }) {
-  const { interviewId, questions, userName } = interviewData;
+  const interviewId = interviewData?.interviewId;
+  const questions = interviewData?.questions || [];
+  const userName = interviewData?.userName || "";
+  if (!interviewData || !questions?.length) {
+    return null;
+  }
   const [isIntroPhase, setIsIntroPhase] = useState(true);
 
   const [isMicOn, setIsMicOn] = useState(true);
@@ -33,7 +38,7 @@ function Step2Interview({ interviewData, onFinish }) {
 
   const videoRef = useRef(null);
 
-  const currentQuestion = questions[currentIndex];
+  const currentQuestion = questions?.[currentIndex];
 
 
   useEffect(() => {
@@ -64,7 +69,9 @@ function Step2Interview({ interviewData, onFinish }) {
         );
 
       if (maleVoice) {
-        setSelectedVoice(maleVoice);
+        if (voices && voices.length > 0) {
+          setSelectedVoice(voices[0]);
+        }
         setVoiceGender("male");
         return;
       }
@@ -156,7 +163,7 @@ function Step2Interview({ interviewData, onFinish }) {
         await new Promise(r => setTimeout(r, 800));
 
         // If last question (hard level)
-        if (currentIndex === questions.length - 1) {
+        if (currentIndex === questions?.length - 1) {
           await speakText("Alright, this one might be a bit more challenging.");
         }
 
@@ -277,7 +284,7 @@ setIsSubmitting(false)
     setAnswer("");
     setFeedback("");
 
-    if (currentIndex + 1 >= questions.length) {
+    if (currentIndex + 1 >= questions?.length) {
       finishInterview();
       return;
     }
@@ -385,7 +392,7 @@ setIsSubmitting(false)
               </div>
 
               <div>
-                <span className='text-2xl font-bold text-emerald-600'>{questions.length}</span>
+                <span className='text-2xl font-bold text-emerald-600'>{questions?.length}</span>
                 <span className='text-xs text-gray-400'>Total Questions</span>
               </div>
             </div>
@@ -404,7 +411,7 @@ setIsSubmitting(false)
 
           {!isIntroPhase && (<div className='relative mb-6 bg-gray-50 p-4 sm:p-6 rounded-2xl border border-gray-200 shadow-sm'>
             <p className='text-xs sm:text-sm text-gray-400 mb-2'>
-              Question {currentIndex + 1} of {questions.length}
+              Question {currentIndex + 1} of {questions?.length}
             </p>
 
             <div className='text-base sm:text-lg font-semibold text-gray-800 leading-relaxed '>{currentQuestion?.question}</div>
