@@ -258,7 +258,34 @@ function Step2Interview({ interviewData, onFinish }) {
 
 
   const submitAnswer = async () => {
-    if (isSubmitting) return;
+    const submitAnswer = async () => {
+      if (isSubmitting) return;
+      if (!currentQuestion) return;
+    
+      stopMic();
+      setIsSubmitting(true);
+    
+      try {
+        const result = await axios.post(
+          ServerUrl + "/api/interview/submit-answer",
+          {
+            interviewId,
+            questionIndex: currentIndex,
+            answer,
+            timeTaken:
+              (currentQuestion?.timeLimit || 60) - timeLeft,
+          },
+          { withCredentials: true }
+        );
+    
+        setFeedback(result.data.feedback);
+        speakText(result.data.feedback);
+        setIsSubmitting(false);
+      } catch (error) {
+        console.log(error);
+        setIsSubmitting(false);
+      }
+    };
     stopMic()
     setIsSubmitting(true)
 
@@ -268,7 +295,7 @@ function Step2Interview({ interviewData, onFinish }) {
         questionIndex: currentIndex,
         answer,
         timeTaken:
-          currentQuestion.timeLimit - timeLeft,
+        (currentQuestion?.timeLimit || 60) - timeLeft,
       } , {withCredentials:true})
 
       setFeedback(result.data.feedback)
