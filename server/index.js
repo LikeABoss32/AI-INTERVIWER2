@@ -11,7 +11,7 @@ import interviewRouter from "./routes/interview.route.js"
 
 const app = express()
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://ai-interviwer2-client.onrender.com",
     credentials:true
 }))
 
@@ -28,3 +28,4 @@ app.listen(PORT , ()=>{
     console.log(`Server running on port ${PORT}`)
     connectDb()
 })
+
