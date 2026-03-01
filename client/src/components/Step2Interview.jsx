@@ -23,7 +23,7 @@ function Step2Interview({ interviewData, onFinish }) {
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [timeLeft, setTimeLeft] = useState(
-    questions[0]?.timeLimit || 60
+    questions?.[0]?.timeLimit || 60
   );
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -70,7 +70,7 @@ function Step2Interview({ interviewData, onFinish }) {
       }
 
       // Fallback: first voice (assume female)
-      setSelectedVoice(voices[0]);
+      setSelectedVoice(voices?.[0]);
       setVoiceGender("female");
     };
 
@@ -211,8 +211,13 @@ function Step2Interview({ interviewData, onFinish }) {
     recognition.interimResults = false;
 
     recognition.onresult = (event) => {
-      const transcript =
-        event.results[event.results.length - 1][0].transcript;
+     
+      let transcript = "";
+
+      if (event?.results?.length > 0) {
+        const lastResult = event.results[event.results.length - 1];
+        transcript = lastResult?.[0]?.transcript || "";
+      }
 
       setAnswer((prev) => prev + " " + transcript);
     };
