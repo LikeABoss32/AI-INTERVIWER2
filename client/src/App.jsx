@@ -11,7 +11,7 @@ import InterviewHistory from './pages/InterviewHistory'
 import InterviewReport from './pages/InterviewReport'
 import GDPage from './pages/GDPage'
 
-export const ServerUrl  = "http://localhost:8000"
+export const ServerUrl  = "https://hiremateserver-ai.onrender.com"
 
 function App() {
 
