@@ -566,11 +566,11 @@ function GDPage() {
                   className={`w-10 h-10 flex items-center justify-center rounded-full transition flex-shrink-0 ${
                     isMicOn ? 'bg-red-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}>
-<<<<<<< HEAD
-                   <FaMicrophone size={14} />
-=======
+
+               
+
                   <FaMicrophone size={14} />
->>>>>>> b9b0bc8effeae2b922580bc74c46464e9cb1a902
+
                 </motion.button>
 
                 <input
