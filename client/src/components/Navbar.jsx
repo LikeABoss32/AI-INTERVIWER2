@@ -67,6 +67,9 @@ function Navbar() {
                     <button onClick={() => scrollToSection('features')} className='text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-medium'>Features</button>
                     <button onClick={() => scrollToSection('modes')} className='text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-medium'>Modes</button>
                     <button onClick={() => scrollToSection('faq')} className='text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-medium'>FAQ</button>
+                    <button onClick={() => navigate(userData?.role === 'admin' ? '/admin/dashboard' : '/admin')} className='text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-medium flex items-center gap-1'>
+                        Admin Portal
+                    </button>
                 </div>
 
                 <div className='flex items-center gap-3 relative'>

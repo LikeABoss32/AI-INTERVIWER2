@@ -13,7 +13,7 @@ import axios from "axios"
 import { ServerUrl } from '../App';
 import { useSelector } from 'react-redux';
 
-function Step1SetUp({ onStart }) {
+function Step1SetUp({ interviewType, onStart }) {
     const { userData } = useSelector((state) => state.user)
     const [role, setRole] = useState("");
     const [experience, setExperience] = useState("");
@@ -56,7 +56,7 @@ function Step1SetUp({ onStart }) {
         setLoading(true)
         setError("")
         try {
-            const result = await axios.post(ServerUrl + "/api/interview/generate-questions", { role, experience, mode, resumeText, projects, skills }, { withCredentials: true })
+            const result = await axios.post(ServerUrl + "/api/interview/generate-questions", { role, experience, mode, interviewType, resumeText, projects, skills }, { withCredentials: true })
             setLoading(false)
             onStart(result.data)
 

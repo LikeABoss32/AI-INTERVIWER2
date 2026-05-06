@@ -37,6 +37,24 @@ const interviewSchema = new mongoose.Schema({
         enum:["HR" ,"Technical", "GD"],
         required:true
     },
+    interviewType: {
+        type: String,
+        enum: ["mock", "test"],
+        default: "mock"
+    },
+    cheatingLogs: [{
+        timestamp: { type: Date, default: Date.now },
+        eventType: String, // e.g., 'tab_switch', 'multiple_faces', 'noise_detected'
+        details: String
+    }],
+    codingPerformance: {
+        score: { type: Number, default: 0 },
+        feedback: String
+    },
+    emotionAnalytics: {
+        averageConfidence: { type: Number, default: 0 },
+        dominantEmotion: String
+    },
     resumeText:{
      type:String
     },

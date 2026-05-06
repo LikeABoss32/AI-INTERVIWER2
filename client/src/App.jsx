@@ -10,6 +10,9 @@ import InterviewPage from './pages/InterviewPage'
 import InterviewHistory from './pages/InterviewHistory'
 import InterviewReport from './pages/InterviewReport'
 import GDPage from './pages/GDPage'
+import AdminLogin from './pages/AdminLogin'
+import AdminDashboard from './pages/AdminDashboard'
+import AdminReport from './pages/AdminReport'
 
 export const ServerUrl  = "http://localhost:8000"
 
@@ -42,6 +45,9 @@ function App() {
       <Route path='/history' element={<InterviewHistory/>}/>
       <Route path='/report/:id' element={<InterviewReport/>}/>
       <Route path='/gd' element={<GDPage/>}/>
+      <Route path='/admin' element={<AdminLogin/>}/>
+      <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
+      <Route path='/admin/report/:id' element={<AdminReport/>}/>
     </Routes>
   )
 }

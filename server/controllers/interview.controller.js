@@ -84,11 +84,12 @@ Return strictly JSON:
 
 export const generateQuestion = async (req, res) => {
   try {
-    let { role, experience, mode, resumeText, projects, skills } = req.body
+    let { role, experience, mode, interviewType, resumeText, projects, skills } = req.body
 
     role = role?.trim();
     experience = experience?.trim();
     mode = mode?.trim();
+    interviewType = interviewType?.trim() || "mock";
 
     if (!role || !experience || !mode) {
       return res.status(400).json({ message: "Role, Experience and Mode are required." })
@@ -245,6 +246,7 @@ Question 7 → hard (complex real-world challenge)
       role,
       experience,
       mode,
+      interviewType,
       resumeText: safeResume,
       questions: questionsArray.map((q, index) => ({
         question: q,
@@ -500,6 +502,7 @@ ${questionSummary}
     await interview.save();
 
     return res.status(200).json({
+      interviewType: interview.interviewType,
       finalScore: Number(finalScore.toFixed(1)),
       confidence: Number(avgConfidence.toFixed(1)),
       communication: Number(avgCommunication.toFixed(1)),
@@ -583,6 +586,7 @@ export const getInterviewReport = async (req,res) => {
       role: interview.role,
       experience: interview.experience,
       mode: interview.mode,
+      interviewType: interview.interviewType,
       questionWiseScore: interview.questions.map(q => ({
         question: q.question,
         score: q.score || 0,
@@ -602,3 +606,24 @@ export const getInterviewReport = async (req,res) => {
     return res.status(500).json({message:`failed to find currentUser Interview report ${error}`})
   }
 }
+
+export const logCheatingEvent = async (req, res) => {
+  try {
+    const { interviewId, eventType, details } = req.body;
+    const interview = await Interview.findById(interviewId);
+    if (!interview) {
+      return res.status(404).json({ message: "Interview not found" });
+    }
+    
+    interview.cheatingLogs.push({
+      timestamp: new Date(),
+      eventType,
+      details
+    });
+
+    await interview.save();
+    return res.status(200).json({ message: "Event logged successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Failed to log cheating event: ${error}` });
+  }
+};

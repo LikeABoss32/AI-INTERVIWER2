@@ -166,7 +166,7 @@ function Home() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
               className='flex flex-wrap justify-center gap-6 mt-8 text-sm text-gray-400 dark:text-gray-500'>
-              <span className='flex items-center gap-1'><FaCheckCircle className='text-green-500' /> No Sign-up Required to Explore</span>
+              <span className='flex items-center gap-1'><FaCheckCircle className='text-green-500' /> AI Powered Smart Interview Platform</span>
               <span className='flex items-center gap-1'><FaCheckCircle className='text-green-500' /> Resume-Based Questions</span>
               <span className='flex items-center gap-1'><FaCheckCircle className='text-green-500' /> Unlimited Free Interviews</span>
             </motion.div>

@@ -10,7 +10,7 @@ import autoTable from "jspdf-autotable"
 import { BsArrowUpRight, BsArrowDownRight } from 'react-icons/bs';
 import { useTheme } from '../context/ThemeContext';
 
-function Step3Report({ report }) {
+function Step3Report({ report, isAdminView = false }) {
   const { darkMode } = useTheme();
 
   if (!report) {
@@ -40,7 +40,27 @@ function Step3Report({ report }) {
     role = "",
     experience = "",
     mode = "",
+    interviewType = "mock",
   } = report;
+
+  if (interviewType === "test" && !isAdminView) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+        <div className='bg-white dark:bg-gray-800 p-10 rounded-3xl shadow-2xl text-center max-w-lg mx-4 border border-gray-200 dark:border-gray-700'>
+          <div className='w-20 h-20 bg-green-100 dark:bg-green-900/30 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6'>
+            <FaCheckCircle size={40} />
+          </div>
+          <h2 className='text-3xl font-bold text-gray-800 dark:text-white mb-4'>Test Completed</h2>
+          <p className='text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8'>
+            Your interview is successfully completed. You may now leave the session.
+          </p>
+          <button onClick={() => navigate("/")} className='bg-black dark:bg-emerald-600 text-white px-8 py-3 rounded-full hover:opacity-90 transition shadow-md font-semibold'>
+            Return to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const questionScoreData = questionWiseScore.map((score, index) => ({
     name: `Q${index + 1}`,
@@ -220,7 +240,7 @@ function Step3Report({ report }) {
           <div>
             <p className={`font-bold text-lg ${readinessStyle.text}`}>{readinessLevel}</p>
             <p className='text-gray-600 dark:text-gray-400 text-sm'>
-              Answered {totalAnswered || questionWiseScore.filter(q => !q.skipped).length} of {totalQuestions || questionWiseScore.length} questions
+              Answered {totalAnswered !== undefined && totalAnswered !== null ? totalAnswered : questionWiseScore.filter(q => !q.skipped).length} of {totalQuestions || questionWiseScore.length} questions
             </p>
           </div>
         </div>

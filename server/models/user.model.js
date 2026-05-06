@@ -13,6 +13,18 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    role: {
+        type: String,
+        enum: ["candidate", "admin"],
+        default: "candidate"
+    },
+    is2FAEnabled: {
+        type: Boolean,
+        default: false
+    },
+    twoFactorSecret: {
+        type: String
     }
 
 }, {timestamps:true})

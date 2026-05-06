@@ -45,32 +45,41 @@ function Step2Interview({ interviewData, onFinish }) {
       const voices = window.speechSynthesis.getVoices();
       if (!voices.length) return;
 
-      const femaleVoice = voices.find(v =>
-        v.name.toLowerCase().includes("zira") ||
-        v.name.toLowerCase().includes("samantha") ||
-        v.name.toLowerCase().includes("female")
-      );
+      const isFemalePreferred = Math.random() < 0.5;
 
-      if (femaleVoice) {
-        setSelectedVoice(femaleVoice);
-        setVoiceGender("female");
-        return;
+      const isFemale = (v) => {
+        const name = v.name.toLowerCase();
+        return name.includes("zira") || name.includes("samantha") || name.includes("female") || name.includes("victoria") || name.includes("karen") || name.includes("moira") || name.includes("tessa");
+      };
+
+      const isMale = (v) => {
+        const name = v.name.toLowerCase();
+        return name.includes("david") || name.includes("mark") || name.includes("male") || name.includes("alex") || name.includes("daniel") || name.includes("rishi") || name.includes("aaron");
+      };
+
+      const femaleVoice = voices.find(isFemale);
+      const maleVoice = voices.find(isMale);
+
+      if (isFemalePreferred) {
+        if (femaleVoice) {
+          setSelectedVoice(femaleVoice);
+          setVoiceGender("female");
+        } else {
+          setSelectedVoice(voices[0]);
+          setVoiceGender("female"); // Assume default is female
+        }
+      } else {
+        if (maleVoice) {
+          setSelectedVoice(maleVoice);
+          setVoiceGender("male");
+        } else if (femaleVoice) {
+          setSelectedVoice(femaleVoice);
+          setVoiceGender("female");
+        } else {
+          setSelectedVoice(voices[0]);
+          setVoiceGender("female"); // Assume default is female if no specific male voice found
+        }
       }
-
-      const maleVoice = voices.find(v =>
-        v.name.toLowerCase().includes("david") ||
-        v.name.toLowerCase().includes("mark") ||
-        v.name.toLowerCase().includes("male")
-      );
-
-      if (maleVoice) {
-        setSelectedVoice(maleVoice);
-        setVoiceGender("male");
-        return;
-      }
-
-      setSelectedVoice(voices?.[0]);
-      setVoiceGender("female");
     };
 
     loadVoices();
