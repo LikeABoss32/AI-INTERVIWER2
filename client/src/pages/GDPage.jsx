@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { motion } from "motion/react"
 import { BsRobot, BsSend, BsArrowLeft, BsMic, BsMicMute } from 'react-icons/bs'
 
-import { FaUsers, FaStop, FaMicrophone } from 'react-icons/fa'
 
 import { FaUsers, FaStop, FaMicrophone} from 'react-icons/fa'
 
